@@ -38,30 +38,46 @@ const setCount = ({ count }) => ({
 //   incrementBy: typeof incrementBy === 'number' ? incrementBy : 1
 // });
 
-const store = createStore((state = { count: 5 }, action ) => {
-  switch(action.type) {
-    case 'INCREMENT':
-    // const incrementBy = typeof action.incrementBy === 'number' ? action.incrementBy : 1;
-    return {
-      count: state.count + action.incrementBy
-    }
-    case 'DECREMENT':
-    // const decrementBy = typeof action.decrementBy === 'number' ? action.decrementBy : -1;
-    return {
-      count: state.count - action.decrementBy
-    }
-    case 'RESET':
-    return {
-      count: 0
-    }
-    case 'SET': 
+//Reducer
+// 1. Reducer is a pure function 
+//  
+// not pure
+// let a = 10;
+// const add = (b) => {
+//   return a + b;
+// }
+
+// not pure
+//let add = (a, b) => {
+  // return a+b;
+// };
+const countReducer = (state = { count: 0 }, action) => {
+  (state = { count: 5 }, action ) => {
+    switch(action.type) {
+      case 'INCREMENT':
+      // const incrementBy = typeof action.incrementBy === 'number' ? action.incrementBy : 1;
       return {
-        count: action.count
+        count: state.count + action.incrementBy
+      }
+      case 'DECREMENT':
+      // const decrementBy = typeof action.decrementBy === 'number' ? action.decrementBy : -1;
+      return {
+        count: state.count - action.decrementBy
+      }
+      case 'RESET':
+      return {
+        count: 0
+      }
+      case 'SET': 
+        return {
+          count: action.count
+      }
+      default: 
+      return state;
     }
-    default: 
-    return state;
   }
-});
+}
+const store = createStore(countReducer);
 
 
 

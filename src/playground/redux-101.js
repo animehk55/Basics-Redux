@@ -51,6 +51,8 @@ const setCount = ({ count }) => ({
 //let add = (a, b) => {
   // return a+b;
 // };
+// 2. Never change state or action 
+
 const countReducer = (state = { count: 0 }, action) => {
   (state = { count: 5 }, action ) => {
     switch(action.type) {

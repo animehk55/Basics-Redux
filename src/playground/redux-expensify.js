@@ -100,3 +100,10 @@ const demoState = {
 };
 
 console.log("expensify");
+
+
+const user = {
+    name: 'Jen',
+    age: 24
+}
+console.log('testing in console the spread operator values',{age: 29, ...user, name: 'Animesh',location: 'India'});

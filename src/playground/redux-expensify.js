@@ -134,10 +134,19 @@ const getVisibleExpenses = (expenses, { text, sortBy, startDate, endDate }) => {
     return expenses.filter((expense) => {
         const startDateMarch = typeof  startDate !== 'number' || expense.createAt >= startDate;
         const endDateMatch = typeof endDate !== 'number' || expense.createAt <= endDate;
-        const textMatch = true;
+        const textMatch = expense.description.toLowerCase().includes(text.toLowerCase());
 
+        // figure out if expenses.description as the text variable string inside of it
+        // includes
+        // convert both string to lower case
         return startDateMarch && endDateMatch && textMatch;
-    });
+    }).sort((a, b) => {
+        if (sortBy === 'date') {
+            return a.createAt < b.createAt ? 1 : -1;
+    } else if (sortBy === 'amount'){
+        return a.amount < b.amount ? 1 : -1
+    }
+});
 };
 
 // store creation
@@ -155,7 +164,7 @@ store.subscribe(() => {
     // console.log("inside subscribe method",store.getState());
 });
 
-const expenseOne = store.dispatch(addExpense({ description: 'Rent', amount: 100, createAt: 5000 }));
+const expenseOne = store.dispatch(addExpense({ description: 'Rent', amount: 100, createAt: -21000 }));
 const expenseTwo = store.dispatch(addExpense({ description: 'Coffee', amount: 55, createAt: -1000 }));
 // // const expenseThree = store.dispatch(addExpense({ description: 'Biryani', amount: 156 }));
 // // const expenseFour = store.dispatch(addExpense({ description: 'water', amount: 10 }));
@@ -164,17 +173,17 @@ const expenseTwo = store.dispatch(addExpense({ description: 'Coffee', amount: 55
 // store.dispatch(removeExpense({ id: expenseOne.expense.id}));
 // store.dispatch(editExpense(expenseTwo.expense.id, { amount: 500, createAt: 4545 }));
 //
-// store.dispatch(setTextFilter('rent'));
+store.dispatch(setTextFilter('rent'));
 // store.dispatch(setTextFilter());
 //
 // store.dispatch(sortByAmount()); // amount
 // store.dispatch(sortByDate()); // date
 // // console.log("GET Object list so that we can edit it", expenseOne)
 //
-store.dispatch(setStartDate(-10000025));      // startDate 125
+// store.dispatch(setStartDate(0));      // startDate 125
 // store.dispatch(setStartDate()); // startDAte undefined
-// store.dispatch(setEndDate(1250)); // endDate 1250
-
+// store.dispatch(setEndDate(9999999)); // endDate 1250
+/*maximum start date then it will print empty error as there is no other after that if it is 999999999999 or ....smaller... then */
 
 // console.log("outsidesubscribe method",store.getState());
 
